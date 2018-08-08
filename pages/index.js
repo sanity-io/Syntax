@@ -1,25 +1,29 @@
 import React from 'react';
+import { withRouter } from 'next/router';
 import ShowList from '../components/ShowList';
 import ShowNotes from '../components/ShowNotes';
 import Player from '../components/Player';
 import Meta from '../components/meta';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Page from '../components/Page';
 import client from '../lib/client';
 
 const query = `{
-  "shows": *[_type == "episode"]|order(schedule.publish desc),
+  "shows": *[_type == "episode" && (defined(file) || defined(fileUrl))]{
+    ...,
+    "url": coalesce(fileUrl, file.asset->url)
+    }|order(schedule.publish desc),
   "podcast": *[_type == "podcast" && slug.current == $slug][0]{
     ...,
     "hosts": hosts[]->
   }
 }`
 
-export default class IndexPage extends React.Component {
+const params = { slug: "syntax"}
+
+class IndexPage extends React.Component {
   constructor(props) {
-    super();
-    const currentShow = props.url.query.number || props.shows[0].displayNumber;
+    super(props);
+    const currentShow = props.router.query.number || props.shows[0].displayNumber;
 
     this.state = {
       currentShow,
@@ -30,13 +34,13 @@ export default class IndexPage extends React.Component {
   static async getInitialProps({ req }) {
     const protocol = req && req.headers.host.indexOf('syntax.fm') > -1 ? 'https' : req ? req.protocol : '';
     const baseURL = req ? `${protocol}://${req.headers.host}` : window.location.origin;
-    const { shows, podcast } = await client.fetch(query, { slug: "syntax"})
-    console.log(podcast)
-    return { shows, podcast, baseURL };
+    const { shows = [], podcast } = await client.fetch(query, params)
+    const showsNumber = shows.reduce((acc, curr, index) => ([...acc, { ...curr, displayNumber: `0${shows.length - index}`, number: shows.length - index }]), [])
+    return { shows: showsNumber, podcast, baseURL };
   }
 
   componentWillReceiveProps(nextProps) {
-    const { pathname, query } = nextProps.url;
+    const { query } = nextProps.url;
     if (query.number) {
       this.setState({ currentShow: query.number });
     }
@@ -48,7 +52,7 @@ export default class IndexPage extends React.Component {
   };
 
   render() {
-    const { shows = [], podcast, baseURL } = this.props;
+    const { baseURL, podcast, shows } = this.props;
     const { currentShow, currentPlaying } = this.state;
     // Currently Shown shownotes
     const show = shows.find(show => show.displayNumber === currentShow);
@@ -73,3 +77,4 @@ export default class IndexPage extends React.Component {
     );
   }
 }
+export default withRouter(IndexPage)
