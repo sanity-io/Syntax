@@ -1,70 +1,63 @@
-import Subscribe from './Subscribe';
+import React from 'react'
+import BlockContent from '@sanity/block-content-to-react';
+import Subscribe from './Subscribe'
+import imageUrlBuilder from '@sanity/image-url'
+import client from '../lib/client'
 
-const Header = () => (
-  <header className="header">
-    <div className="header__left">
-      <img className="header__logo" src="/static/logo.png" alt="Syntax" />
-    </div>
-    <div className="header__right">
-      <div className="title">
-        <h2 className="tagline">A Tasty Treats Podcast for Web Developers.</h2>
-        <a
-          target="_blank"
-          href="https://docs.google.com/forms/d/e/1FAIpQLSfQlAo1wXHiJMySdU-h8QMtfoz92aMS9eycEHXB6eRCLh8KHA/viewform"
-          className="title__potluck-btn"
-        >
-          Ask a Potluck Question →
-        </a>
-      </div>
-      <div className="people">
-        <div className="person">
+const builder = imageUrlBuilder(client)
+
+function urlFor (source) {
+  return builder.image(source)
+}
+
+class Header extends React.Component {
+  render () {
+    const { title, subtitle, coverArt, hosts } = this.props.podcast
+    console.log(this.props)
+    return (
+      <header className="header">
+        <div className="header__left">
           <img
-            src="/static/wes400x400.jpg"
-            alt=""
-            className="avatar"
+            className="header__logo"
+            src={urlFor(coverArt)
+              .width(300)
+              .url()}
+            alt="Syntax"
           />
-          <h3>Wes Bos</h3>
-          <a
-            target="_blank"
-            href="https://twitter.com/wesbos"
-            className="person__social person__social--twitter"
-          >
-            @wesbos
-          </a>
-          <p>
-            Full Stack JavaScript Developer. Creator of really good{' '}
-            <a target="_blank" href="https://wesbos.com/courses">
-              web development courses
-            </a>. BBQ enthusiast.
-          </p>
         </div>
-
-        <div className="person">
-          <img
-            src="https://avatars2.githubusercontent.com/u/669383?s=460&v=4"
-            alt=""
-            className="avatar"
-          />
-          <h3>Scott Tolinski</h3>
-          <a
-            target="_blank"
-            href="https://twitter.com/stolinski"
-            className="person__social person__social--twitter"
-          >
-            @stolinski
-          </a>
-          <p>
-            Web Developer, Creator of <a href="https://leveluptutorials.com/">Level Up Tuts</a>,
-            Bboy, Robotops Crew and{' '}
-            <a target="_blank" href="https://www.youtube.com/c/leveluptuts">
-              Youtuber
+        <div className="header__right">
+          <div className="title">
+            <h2 className="tagline">
+              {title} {subtitle}
+            </h2>
+            <a
+              target="_blank"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfQlAo1wXHiJMySdU-h8QMtfoz92aMS9eycEHXB6eRCLh8KHA/viewform"
+              className="title__potluck-btn"
+            >
+              Ask a Potluck Question →
             </a>
-          </p>
+          </div>
+          <div className="people">
+            {hosts.map(({ _id, name, social, description, image }) => (
+              <div key={_id} className="person">
+                <img src={urlFor(image).width(75).url()} alt="" className="avatar" />
+                <h3>{name}</h3>
+                <a
+                  target="_blank"
+                  href={`https://twitter.com/${social.twitter}`}
+                  className="person__social person__social--twitter"
+                >
+                  @{social.twitter}
+                </a>
+                <BlockContent blocks={description} />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </div>
-    <Subscribe />
-  </header>
-);
-
-export default Header;
+        <Subscribe />
+      </header>
+    )
+  }
+}
+export default Header
