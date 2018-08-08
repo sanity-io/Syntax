@@ -10,7 +10,8 @@ export default class Player extends React.Component {
 
     // for SSR
     if (typeof window !== 'undefined') {
-      const lp = localStorage.getItem(`lastPlayed${this.props.show.number}`);
+      const { show: { number } = {}} = this.props
+      const lp = localStorage.getItem(`lastPlayed${number}`);
       if (lp) lastPlayed = JSON.parse(lp).lastPlayed;
     }
 
