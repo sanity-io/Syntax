@@ -1,4 +1,5 @@
 import React from 'react'
+import BlockContent from '@sanity/block-content-to-react';
 import Show from './Show';
 
 export default ({ show, setCurrentPlaying }) =>
@@ -7,7 +8,7 @@ export default ({ show, setCurrentPlaying }) =>
     <h2>{show.title}</h2>
     <button className="button" onClick={() => setCurrentPlaying(show.displayNumber)}><span className="icon">🎵</span> Play Episode {show.displayNumber}</button>
     <a className="button" download href={show.url}><span className="icon">👇</span> Download Show</a>
-    <a className="button" href={`https://github.com/wesbos/Syntax/edit/master/${show.notesFile}`} target='_blank'><span className="icon">✏️</span> Edit Show Notes</a>
-    <div dangerouslySetInnerHTML={{ __html: show.html }}></div>
+    {<a className="button" href={`https://syntaxfm.sanity.studio/desk/episode/edit/${show._id}`} target='_blank'><span className="icon">✏️</span> Edit Show Notes</a>}
+    <BlockContent blocks={show.content} />
   </div>
 
