@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "deploy": "now",
-    "alias": "now alias"
+    "alias": "now alias",
+    "next": "next"
   },
   "now": {
     "alias": [
@@ -16,6 +17,9 @@
     ]
   },
   "dependencies": {
+    "@sanity/block-content-to-react": "^2.0.2",
+    "@sanity/client": "^0.132.5",
+    "@sanity/image-url": "^0.132.5",
     "autoprefixer": "8.6.3",
     "axios": "^0.18.0",
     "babel-plugin-module-resolver": "3.1.1",
