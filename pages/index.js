@@ -20,6 +20,12 @@ const query = `{
 
 const params = { slug: "syntax"}
 
+async function getData() {
+  const { shows = [], podcast } = await client.fetch(query, params)
+  const showsNumber = shows.reduce((acc, curr, index) => ([...acc, { ...curr, displayNumber: `0${shows.length - index}`, number: shows.length - index }]), [])
+  return { shows: showsNumber, podcast }
+}
+
 class IndexPage extends React.Component {
   constructor(props) {
     super(props);
@@ -27,16 +33,17 @@ class IndexPage extends React.Component {
 
     this.state = {
       currentShow,
-      currentPlaying: currentShow
+      currentPlaying: currentShow,
+      shows: props.shows,
+      podcast: props.podcast
     };
   }
 
   static async getInitialProps({ req }) {
     const protocol = req && req.headers.host.indexOf('syntax.fm') > -1 ? 'https' : req ? req.protocol : '';
     const baseURL = req ? `${protocol}://${req.headers.host}` : window.location.origin;
-    const { shows = [], podcast } = await client.fetch(query, params)
-    const showsNumber = shows.reduce((acc, curr, index) => ([...acc, { ...curr, displayNumber: `0${shows.length - index}`, number: shows.length - index }]), [])
-    return { shows: showsNumber, podcast, baseURL };
+    const { shows, podcast } = await getData()
+    return { shows, podcast, baseURL };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -45,6 +52,15 @@ class IndexPage extends React.Component {
       this.setState({ currentShow: query.number });
     }
   }
+  componentDidMount() {
+    this.subscription = client.listen(query, params).subscribe(async () => {
+      const { shows, podcast } = await getData()
+      this.setState({ shows, podcast })
+    })
+  }
+  componentWillUnmount() {
+    this.subscription.unsubscribe()
+  }
 
   setCurrentPlaying = currentPlaying => {
     console.log('Setting current playing');
@@ -52,7 +68,8 @@ class IndexPage extends React.Component {
   };
 
   render() {
-    const { baseURL, podcast, shows } = this.props;
+    const { baseURL } = this.props;
+    const {shows, podcast} = this.state
     const { currentShow, currentPlaying } = this.state;
     // Currently Shown shownotes
     const show = shows.find(show => show.displayNumber === currentShow);
