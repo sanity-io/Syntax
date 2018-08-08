@@ -13,7 +13,6 @@ function urlFor (source) {
 class Header extends React.Component {
   render () {
     const { title, subtitle, coverArt, hosts } = this.props.podcast
-    console.log(this.props)
     return (
       <header className="header">
         <div className="header__left">
