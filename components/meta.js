@@ -2,7 +2,7 @@ import Head from 'next/head';
 import stylesheet from '../styles/style.styl';
 import slug from 'speakingurl';
 
-export default ({ show, baseURL }) => (
+export default ({ show = {}, baseURL }) => (
   <div>
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
