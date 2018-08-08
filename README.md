@@ -2,6 +2,10 @@
 
 This is an alternative version of the [syntax.fm](https://syntax.fm) frontend that uses [sanity.io](https://sanity.io) as a backend. You can find the Sanity Studio in [this repo](https://github.com/sanity-io/syntax-studio). And get the data in your own project by running [this migration CLI](https://github.com/sanity-io/podcast-to-sanity). The studio will work well with other podcasts too.
 
+![Live updates from the Studio](https://raw.githubusercontent.com/sanity-io/Syntax/master/syntax-in-sanity.gif)
+
+You can probably run this project locally. We have added CORS settings for localhost:3000.
+
 ## Original description
 
 A tasty treats podcast for Web Developers.
