@@ -8,7 +8,7 @@ export default class Page extends React.Component {
   render() {
     return (
       <div className="page">
-        <Header />
+        <Header podcast={this.props.podcast} />
         <style dangerouslySetInnerHTML={{ __html: stylesheet.replace(/\n/g, '') }} />
         {this.props.children}
         <Footer />
