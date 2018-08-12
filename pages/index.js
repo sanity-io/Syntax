@@ -39,9 +39,12 @@ class IndexPage extends React.Component {
     };
   }
 
-  static async getInitialProps({ req }) {
-    const protocol = req && req.headers.host.indexOf('syntax.fm') > -1 ? 'https' : req ? req.protocol : '';
-    const baseURL = req ? `${protocol}://${req.headers.host}` : window.location.origin;
+  static async getInitialProps({ req, query = {} }) {
+    let baseURL = 'https://syntax.fm'
+    if (!query.build) {
+      const protocol = req && req.headers.host.indexOf('syntax.fm') > -1 ? 'https' : req ? req.protocol : '';
+      baseURL = req ? `${protocol}://${req.headers.host}` : window.location.origin;
+    }
     const { shows, podcast } = await getData()
     return { shows, podcast, baseURL };
   }
@@ -76,7 +79,7 @@ class IndexPage extends React.Component {
     // Currently Playing
     const current = shows.find(show => show.displayNumber === currentPlaying);
     return (
-      <Page podcast={podcast} >
+      <Page podcast={podcast}>
         <Meta show={show} baseURL={baseURL} />
         <div className="wrapper">
           <div className="show-wrap">

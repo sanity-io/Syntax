@@ -2,7 +2,14 @@ const path = require('path');
 const glob = require('glob');
 
 module.exports = {
+  exportPathMap: async function (defaultPathMap) {
+    return {
+      '/': { page: '/', query: { build: true } },
+      '/sponsor': { page: 'sponsor', query: { build: true } }
+    }
+  },
   webpack: (config, { dev }) => {
+
     config.module.rules.push(
       {
         test: /\.(css|styl)/,

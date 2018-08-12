@@ -1,21 +1,36 @@
 import React from 'react';
-import axios from 'axios';
-import ShowList from '../components/ShowList';
-import ShowNotes from '../components/ShowNotes';
-import Player from '../components/Player';
-import Meta from '../components/meta';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Page from '../components/Page';
+import client from '../lib/client';
 
+const query = `{
+  "podcast": *[_type == "podcast" && slug.current == $slug][0]{
+    ...,
+    "hosts": hosts[]->
+  }
+}`
+const params = { slug: "syntax"}
+function getData() {
+  return client.fetch(query, params)
+}
 export default class SponsorPage extends React.Component {
   componentDidCatch = e => {
     console.log('ERRORRRRR');
     console.log(e);
   };
+  static async getInitialProps({ req, query = {} }) {
+    let baseURL = 'https://syntax.fm'
+    if (!query.build) {
+      const protocol = req && req.headers.host.indexOf('syntax.fm') > -1 ? 'https' : req ? req.protocol : '';
+      baseURL = req ? `${protocol}://${req.headers.host}` : window.location.origin;
+    }
+    const { podcast } = await getData()
+    console.log(podcast)
+    return { podcast, baseURL };
+  }
   render() {
+    console.log(this.props.podcast)
     return (
-      <Page>
+      <Page podcast={this.props.podcast}>
         <div className="wrapper wrapper--text">
           <h1>Syntax Sponsorship</h1>
           <p>
