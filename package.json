@@ -9,7 +9,7 @@
     "deploy": "now",
     "alias": "now alias",
     "next": "next",
-    "export": "npm run build && next export",
+    "export": "npm run build && next export && cp ./static/robots.txt out",
     "lambda": "netlify-lambda serve functions"
   },
   "now": {
