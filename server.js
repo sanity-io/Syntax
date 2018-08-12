@@ -2,6 +2,7 @@ const express = require('express');
 const next = require('next');
 const sanityClient = require('@sanity/client')
 const Router = require('./routes').Router;
+const { rssHandler, jsonHandler } = require('./routeHandlers')
 const dev = process.env.NODE_ENV !== 'production';
 const port = parseInt(process.env.PORT, 10) || 3000;
 const app = next({ dev });
@@ -33,6 +34,9 @@ app.prepare().then(() => {
     }
     res.status(404).json({ message: 'Sorry not found' });
   });
+
+  server.get('/feed/rss', rssHandler)
+  server.get('/feed/json', jsonHandler)
 
   // Custom Next.js URLs
   Router.forEachPattern((page, pattern, defaultParams) => {
