@@ -5,6 +5,7 @@ This is an alternative version of the [syntax.fm](https://syntax.fm) frontend th
 We added a [listener](https://www.sanity.io/docs/client-libraries/js-client#listening-to-queries) so that the page updates live when something new is published. If you configure the [@sanity/client](https://www.sanity.io/docs/client-libraries/js-client) with a token with read permissions you can preview changes live before publishing them.
 
 ⚠️ Note: We kept the original feed links on the page to keep anyone from picking the wrong one.
+
 ⚠️ If you fork this repo to use for your own stuff, note that we added a robots.txt to keep it from being indexed.
 
 ![Live updates from the Studio](https://raw.githubusercontent.com/sanity-io/Syntax/master/syntax-in-sanity.gif)
