@@ -1,2 +1,3 @@
 [build]
-    functions = "./lamdaHandlers"
+    publish = "out"
+    functions = "feed"
