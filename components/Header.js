@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import BlockContent from '@sanity/block-content-to-react';
 import Subscribe from './Subscribe'
 import imageUrlBuilder from '@sanity/image-url'
@@ -14,6 +14,13 @@ class Header extends React.Component {
   render () {
     const { title, subtitle, coverArt, hosts } = this.props.podcast
     return (
+      <Fragment>
+      <div style={{
+        color: '#f9f9f9',
+        textAlign: 'center'
+      }}>
+        This is a mod of <a href="https://syntax.fm">syntax.fm</a> with <a href="https://sanity.io">sanity.io</a> as a backend, hosted on Netlify with serverless lambdas for handling podcast feeds. <a href="https://github.com/sanity-io/Syntax">Check out the GitHub-repo</a>
+      </div>
       <header className="header">
         <div className="header__left">
           <img
@@ -56,7 +63,7 @@ class Header extends React.Component {
         </div>
         <Subscribe />
       </header>
-    )
+    </Fragment>)
   }
 }
 export default Header
