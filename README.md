@@ -8,7 +8,7 @@ We added a [listener](https://www.sanity.io/docs/client-libraries/js-client#list
 
 ⚠️ If you fork this repo to use for your own stuff, note that we added a robots.txt to keep it from being indexed.
 
-![Live updates from the Studio](https://raw.githubusercontent.com/sanity-io/Syntax/master/syntax-in-sanity.gif)
+![Live updates from the Studio](https://cdn.sanity.io/images/3do82whm/production/c035c2edb433ac1480985b8f99a1481554ccd502-1903x1112.gif)
 
 You can run this project locally. We have added [CORS settings](https://www.sanity.io/docs/cors) for localhost:3000 (🎧 [check out the episode on CORS](https://syntax.fm/show/063/hasty-treat-json-jsonp-and-cors)) .
 
