@@ -10,16 +10,18 @@ We added a [listener](https://www.sanity.io/docs/client-libraries/js-client#list
 
 ![Live updates from the Studio](https://raw.githubusercontent.com/sanity-io/Syntax/master/syntax-in-sanity.gif)
 
-You can run this project locally. We have added [CORS settings](https://www.sanity.io/docs/cors) for localhost:3000 ([check out the episode on CORS](https://syntax.fm/show/063/hasty-treat-json-jsonp-and-cors)) .
+You can run this project locally. We have added [CORS settings](https://www.sanity.io/docs/cors) for localhost:3000 (🎧 [check out the episode on CORS](https://syntax.fm/show/063/hasty-treat-json-jsonp-and-cors)) .
 
 ## Express.js 🚀
 If you run this site with the configured express-server (e.g. on [now](https://zeit.co/now) or [heroku](https://heroku.com)) it will also serve RSS and [JSON](https://jsonfeed.org/) podcast feeds on `/feed/rss` and `/feed/json`.
 
 ## Netlify ✨
 
+🔗 [Learn how you can host a sanity.io backed Next.js site on Netlify](https://www.sanity.io/blog/tutorial-host-your-sanity-based-next-js-project-on-netlify)
+
 This repo is also configured to run on Netlify and uses [Netlify Lambdas](https://www.netlify.com/docs/functions/) to produce the RSS and JSON feeds behind `/.netlify/functions/rss` and `/.netlify/functions/json`.
 
-Visit site on Netlify: [syntax-in-sanity.netlify.com](https://syntax-in-sanity.netlify.com/)
+Visit site on Netlify: 🔗 [syntax-in-sanity.netlify.com](https://syntax-in-sanity.netlify.com/)
 
 # Original description
 
