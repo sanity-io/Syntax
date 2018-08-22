@@ -96,7 +96,7 @@ export default class Player extends React.Component {
   };
 
   render() {
-    const { show } = this.props;
+    const { show = {} } = this.props;
     const { playing, progressTime, currentTime, duration } = this.state;
 
     return (
