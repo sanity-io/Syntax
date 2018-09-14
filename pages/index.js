@@ -15,7 +15,7 @@ const query = `{
   "podcast": *[_type == "podcast" && slug.current == $slug][0]{
     ...,
     "hosts": hosts[]->
-  }
+  }|order(_publishedAt asc)
 }`
 
 const params = { slug: "syntax"}
@@ -56,7 +56,7 @@ class IndexPage extends React.Component {
     }
   }
   componentDidMount() {
-    this.subscription = client.listen(query, params).subscribe(async () => {
+    this.subscription = client.listen('*[(_type == "podcast" && slug.current == $slug) || (_type == "episode" && (defined(file) || defined(fileUrl)))]', params).subscribe(async () => {
       const { shows, podcast } = await getData()
       this.setState({ shows, podcast })
     })
