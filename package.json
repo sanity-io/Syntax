@@ -34,7 +34,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2017": "^6.24.1",
     "date-fns": "^2.0.0-alpha.1",
-    "express": "^4.16.3",
+    "express": "^4.21.1",
     "glob": "7.1.2",
     "meta-marked": "^0.4.2",
     "netlify-lambda": "^0.4.0",
